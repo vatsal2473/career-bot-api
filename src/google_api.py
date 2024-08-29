@@ -37,11 +37,12 @@ def get_book_data_by_query(query):
     full_query = f"{query} books"  # Adding 'books' keyword to the dream query
     query_params = {
         'q': full_query,            # Your main search query with added 'books' keyword
-        'maxResults': 3,           # Limiting results to 10 books
+        'maxResults': 1,           # Limiting results to 10 books
         'orderBy': 'relevance',     # Ordering results by relevance
     }
 
     response = requests.get(base_url, params=query_params)
+    print(response)
 
     if response.status_code == 200:
         data = response.json()
@@ -113,7 +114,10 @@ def process_books(book):
     title = book['title']
     author = book['author']
     result = get_book_data_and_cover_by_query(title + " by " + author)
-    return {'title': result[0][0], 'link': result[0][2], 'image_link': result[0][3]}
+    if result:
+        return {'title': result[0][0], 'link': result[0][2], 'image_link': result[0][3]}
+    else:
+        return {'title': title, 'link': None, 'image_link': None}
 
 def process_personalities(personality):
     name = personality['name']

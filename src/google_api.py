@@ -19,7 +19,7 @@ def generate_youtube_links(title):
         q=title,
         part='snippet',
         type='video',
-        maxResults=3
+        maxResults=1
     )
     response = request.execute()
 

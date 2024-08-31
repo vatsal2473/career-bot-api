@@ -19,7 +19,7 @@ def generate_youtube_links(title):
         q=title,
         part='snippet',
         type='video',
-        maxResults=5
+        maxResults=3
     )
     response = request.execute()
 
@@ -39,6 +39,7 @@ def get_book_data_by_query(query):
         'q': full_query,            # Your main search query with added 'books' keyword
         'maxResults': 1,           # Limiting results to 10 books
         'orderBy': 'relevance',     # Ordering results by relevance
+        'key': google_api_key
     }
 
     response = requests.get(base_url, params=query_params)
@@ -60,6 +61,7 @@ def get_book_data_by_query(query):
 def get_book_cover_image(book_data):
     book_cover_images = []
     for title, selflink, previewlink in book_data:
+        selflink = f"{selflink}?key={google_api_key}"
         response = requests.get(selflink)
         if response.status_code == 200:
             data = response.json()

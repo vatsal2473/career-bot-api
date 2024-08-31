@@ -92,7 +92,20 @@ job_role: data scientist
                 "profile": "profile4"
             }
         ], 
-        "online_courses": ["course1", "course2", "course3"]
+        "online_courses": [
+            {
+                "name": "course1",
+                "link": "link1"
+            },
+            {
+                "name": "course2",
+                "link": "link2"
+            },
+            {
+                "name": "course3",
+                "link": "link3"
+            }
+        ]
     }
 }
 """

@@ -34,6 +34,31 @@ skills: python, machine learning, data science
     response = json.loads(response)
     return response
 
+def generate_new_job_recommendations(previous_recommendations):
+    completion = client.chat.completions.create(
+        model="gpt-4o",
+        response_format= { "type": "json_object" },
+        messages=[
+            {
+                "role": "system",
+                "content": """
+you will give me a list of 5-10 job recommendations based on the previous job recommendations and it should be different from previous recommendations, the response should be in a JSON format, for example:
+
+previous_recommendations: data scientist, machine learning engineer, python developer, etc
+{"job_recommendations": ["data architect", "data manager", "data consultant", "data specialist", "data administrator", "data coordinator", "data planner", "data supervisor", "data director", "data executive"]}
+"""
+            },
+            {
+                "role": "user",
+                "content": f"previous_recommendations: {previous_recommendations}"
+            }
+        ]
+    )
+
+    response = completion.choices[0].message.content
+    response = json.loads(response)
+    return response
+
 def generate_job_role_details(job_role):
     completion = client.chat.completions.create(
         model="gpt-4o",
